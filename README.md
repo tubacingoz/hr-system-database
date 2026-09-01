@@ -39,24 +39,3 @@ GROUP BY
     d.DepartmentName
 ORDER BY 
     AverageTenureYears DESC;
-
-### Scenario 2: Critical Leave Balance Control
-**Business Requirement:** The HR department needs to identify operational risks by flagging active employees who have completely exhausted their annual leave balances.
-
-```sql
-SELECT 
-    e.FirstName, 
-    e.LastName, 
-    d.DepartmentName
-FROM 
-    Employees e
-JOIN 
-    Departments d ON e.DepartmentID = d.DepartmentID
-WHERE 
-    e.EmployeeID IN (
-        SELECT EmployeeID 
-        FROM Leave_Requests 
-        GROUP BY EmployeeID 
-        HAVING SUM(LeaveDays) >= 14 -- Assuming 14 days baseline
-    )
-    AND e.IsActive = 1;
