@@ -1,4 +1,4 @@
-#  Corporate HR Management System: Database Architecture & Business Analysis
+# Corporate HR Management System: Database Architecture & Business Analysis
 
 **Manifesto & Project Scope**
 This repository demonstrates the transformation of complex human resources workflows into structured, normalized relational database models. By combining principles of labor economics and industrial relations with IT Business Analysis methodologies, this project bridges the gap between business requirements and technical execution within the Software Development Life Cycle (SDLC). 
@@ -32,10 +32,45 @@ SELECT
 FROM 
     Employees e
 JOIN 
-    Departments d ON e.DepartmentID = d.DepartmentID
+    Departments d ON e.EmployeeID = d.DepartmentID
 WHERE 
     e.IsActive = 1
 GROUP BY 
     d.DepartmentName
 ORDER BY 
     AverageTenureYears DESC;
+
+```
+
+### **Scenario 2: Critical Leave Balance Control**
+
+**Business Requirement:** The HR department needs to identify operational risks by flagging active employees who have completely exhausted their annual leave balances.
+
+```sql
+SELECT 
+    e.FirstName, 
+    e.LastName, 
+    d.DepartmentName
+FROM 
+    Employees e
+JOIN 
+    Departments d ON e.DepartmentID = d.DepartmentID
+WHERE 
+    e.EmployeeID IN (
+        SELECT EmployeeID 
+        FROM Leave_Requests 
+        GROUP BY EmployeeID 
+        HAVING SUM(LeaveDays) >= 14 -- Assuming 14 days baseline
+    )
+    AND e.IsActive = 1;
+
+```
+
+##  Future Enhancements
+
+* **API Integration Planning:** Designing RESTful endpoints to expose this SQL data via JSON payloads for front-end HR dashboards.
+* **Observability & Audit Logging:** Implementing trigger-based audit logs for critical payroll modifications to ensure data governance and system health.
+
+```
+
+```
