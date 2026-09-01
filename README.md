@@ -71,6 +71,25 @@ WHERE
 * **API Integration Planning:** Designing RESTful endpoints to expose this SQL data via JSON payloads for front-end HR dashboards.
 * **Observability & Audit Logging:** Implementing trigger-based audit logs for critical payroll modifications to ensure data governance and system health.
 
-```
+## Getting Started & Configuration
 
-```
+If you want to run or set up this database architecture in your local environment (such as SSMS or Azure Data Studio), you can follow the steps below.
+
+### Prerequisites
+* SQL Server (2019 or later)
+* SQL Server Management Studio (SSMS)
+
+###  Environment Variables / Configuration
+You can use the following parameters for database connection and authorization processes:
+
+| Parameter | Description | Example Value |
+| :--- | :--- | :--- |
+| **Server Name** | The server hosting the database | `localhost\SQLEXPRESS` |
+| **Database Name** | The primary database name for the HR system | `HR_Management_DB` |
+| **Authentication** | Connection type | `SQL Server Authentication` |
+| **Default Port** | TCP/IP listening port | `1433` |
+
+###  Execution Steps
+1. Run the schema and table creation scripts in the repository sequentially.
+2. Import sample employee and department data into the database.
+3. Test the outputs by running the advanced business analysis queries shared above (Tenure and Leave Control) in your query window.
